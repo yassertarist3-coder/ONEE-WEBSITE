@@ -1,8 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 
 // ── Admin pages ──────────────────────────────
-import LoginPage           from '../pages/LoginPage';
+import RoleSelectionPage from '../pages/RoleSelectionPage';
 import DashboardPage       from '../pages/DashboardPage';
 import CatalogPage         from '../pages/CatalogPage';
 import StockEntryPage      from '../pages/StockEntryPage';
@@ -14,22 +13,11 @@ import UsersManagementPage from '../pages/UsersManagementPage';
 import AnalyticsDashboardPage from '../pages/Decisionnel/AnalyticsDashboardPage';
 
 // ── User pages ───────────────────────────────
-import UserLoginPage   from '../pages/UserLoginPage';
 import UserCatalogPage from '../pages/UserCatalogPage';
 import UserRequestPage from '../pages/UserRequestPage';
 import UserTicketsPage from '../pages/UserTicketsPage';
 import UserLayout      from '../components/UserLayout';
-import ProtectedUserRoute from './ProtectedUserRoute';
 import AdminTicketsPage from '../pages/AdminTicketsPage';
-import RoleSelectionPage from '../pages/RoleSelectionPage';
-
-// ── Admin guard ──────────────────────────────
-function ProtectedRoute({ children }) {
-    const { admin, loading } = useAuth();
-    if (loading) return <div>Chargement...</div>;
-    if (!admin) return <Navigate to="/login" />;
-    return children;
-}
 
 export default function AppRoutes() {
     return (
@@ -38,60 +26,32 @@ export default function AppRoutes() {
             <Route path="/" element={<RoleSelectionPage />} />
 
             {/* ── Admin routes ── */}
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/dashboard" element={
-                <ProtectedRoute><DashboardPage /></ProtectedRoute>
-            } />
-            <Route path="/catalog" element={
-                <ProtectedRoute><CatalogPage /></ProtectedRoute>
-            } />
-            <Route path="/stock-entry" element={
-                <ProtectedRoute><StockEntryPage /></ProtectedRoute>
-            } />
-            <Route path="/stock-exit" element={
-                <ProtectedRoute><StockExitPage /></ProtectedRoute>
-            } />
-            <Route path="/discharges" element={
-                <ProtectedRoute><DischargesPage /></ProtectedRoute>
-            } />
-            <Route path="/movements" element={
-                <ProtectedRoute><MovementHistoryPage /></ProtectedRoute>
-            } />
-            <Route path="/low-stock" element={
-                <ProtectedRoute><LowStockPage /></ProtectedRoute>
-            } />
-            <Route path="/admin/tickets" element={
-                <ProtectedRoute><AdminTicketsPage /></ProtectedRoute>
-            } />
-            <Route path="/admin/users" element={
-                <ProtectedRoute><UsersManagementPage /></ProtectedRoute>
-            } />
-            <Route path="/admin/analytics" element={
-                <ProtectedRoute><AnalyticsDashboardPage /></ProtectedRoute>
-            } />
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/catalog" element={<CatalogPage />} />
+            <Route path="/stock-entry" element={<StockEntryPage />} />
+            <Route path="/stock-exit" element={<StockExitPage />} />
+            <Route path="/discharges" element={<DischargesPage />} />
+            <Route path="/movements" element={<MovementHistoryPage />} />
+            <Route path="/low-stock" element={<LowStockPage />} />
+            <Route path="/admin/tickets" element={<AdminTicketsPage />} />
+            <Route path="/admin/users" element={<UsersManagementPage />} />
+            <Route path="/admin/analytics" element={<AnalyticsDashboardPage />} />
 
             {/* ── User routes ── */}
-            <Route path="/user/login" element={<UserLoginPage />} />
             <Route path="/user/catalog" element={
-                <ProtectedUserRoute>
-                    <UserLayout>
-                        <UserCatalogPage />
-                    </UserLayout>
-                </ProtectedUserRoute>
+                <UserLayout>
+                    <UserCatalogPage />
+                </UserLayout>
             } />
             <Route path="/user/request" element={
-                <ProtectedUserRoute>
-                    <UserLayout>
-                        <UserRequestPage />
-                    </UserLayout>
-                </ProtectedUserRoute>
+                <UserLayout>
+                    <UserRequestPage />
+                </UserLayout>
             } />
             <Route path="/user/tickets" element={
-                <ProtectedUserRoute>
-                    <UserLayout>
-                        <UserTicketsPage />
-                    </UserLayout>
-                </ProtectedUserRoute>
+                <UserLayout>
+                    <UserTicketsPage />
+                </UserLayout>
             } />
 
             {/* Fallback */}

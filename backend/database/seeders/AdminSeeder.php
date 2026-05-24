@@ -8,11 +8,14 @@ class AdminSeeder extends Seeder
 {
     public function run(): void
     {
-        Admin::create([
-            'name' => 'System Admin',
-            'email' => 'yassertarist99@gmail.com',
-            'password' => 'yasser123',
-        ]);
-        
+        Admin::updateOrCreate(
+            ['email' => 'admin@onee.ma'],
+            ['name' => 'Admin ONEE', 'password' => 'Admin@2026']
+        );
+
+        Admin::updateOrCreate(
+            ['email' => 'yassertarist99@gmail.com'],
+            ['name' => 'System Admin', 'password' => 'yasser123']
+        );
     }
 }

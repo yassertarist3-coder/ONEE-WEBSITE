@@ -35,7 +35,12 @@ return [
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DB_URL'),
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
+            'database' => env('DB_DATABASE')
+                ? (str_starts_with((string) env('DB_DATABASE'), DIRECTORY_SEPARATOR)
+                    || preg_match('#^[A-Za-z]:[/\\\\]#', (string) env('DB_DATABASE'))
+                    ? env('DB_DATABASE')
+                    : database_path((string) env('DB_DATABASE')))
+                : database_path('database.sqlite'),
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
             'busy_timeout' => null,

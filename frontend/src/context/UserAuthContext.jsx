@@ -3,9 +3,11 @@ import axios from 'axios';
 
 const UserAuthContext = createContext();
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 // Dedicated axios instance for user API — uses user_token, never touches admin token
 const userApi = axios.create({
-    baseURL: 'http://localhost:8000/api/v1/user',
+    baseURL: `${API_URL}/api/v1/user`,
     headers: { Accept: 'application/json' },
 });
 

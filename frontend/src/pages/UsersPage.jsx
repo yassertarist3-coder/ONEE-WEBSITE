@@ -10,7 +10,7 @@ export default function UsersPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    
+
     // Modal state
     const [showModal, setShowModal] = useState(false);
     const [editingUser, setEditingUser] = useState(null);
@@ -80,19 +80,19 @@ export default function UsersPage() {
         try {
             setSubmitting(true);
             setError('');
-            
+
             if (editingUser) {
                 // Remove password if empty
                 const data = { ...formData };
                 if (!data.password) delete data.password;
-                
+
                 await userService.update(editingUser.id, data);
                 setSuccess('Utilisateur mis à jour avec succès');
             } else {
                 await userService.create(formData);
                 setSuccess('Utilisateur créé avec succès');
             }
-            
+
             handleCloseModal();
             fetchUsers();
             setTimeout(() => setSuccess(''), 3000);
@@ -105,7 +105,7 @@ export default function UsersPage() {
 
     const handleDelete = async (id) => {
         if (!window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) return;
-        
+
         try {
             await userService.delete(id);
             setSuccess('Utilisateur supprimé avec succès');
@@ -119,7 +119,7 @@ export default function UsersPage() {
 
     const handleResetPassword = async (id) => {
         if (!window.confirm('Réinitialiser le mot de passe de cet utilisateur ?')) return;
-        
+
         try {
             const response = await userService.resetPassword(id);
             setResetResult({
@@ -325,9 +325,9 @@ export default function UsersPage() {
                                         minLength={6}
                                     />
                                 </div>
-                                
+
                                 {error && <div className="error-message" style={{ marginTop: '12px' }}>{error}</div>}
-                                
+
                                 <div className="modal-footer" style={{ marginTop: '24px' }}>
                                     <button type="button" onClick={handleCloseModal} className="btn-secondary">Annuler</button>
                                     <button type="submit" className="btn-primary" disabled={submitting}>

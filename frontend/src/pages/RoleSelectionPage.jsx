@@ -1,42 +1,54 @@
-import { Droplet, ShieldCheck, UserCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import './RoleSelectionPage.css';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function RoleSelectionPage() {
+    const navigate = useNavigate();
+    const { setRole } = useAuth();
+
+    const handleRoleSelect = (role) => {
+        setRole(role);
+        navigate('/dashboard');
+    };
+
     return (
-        <div className="role-selection-root">
-            <div className="role-bg-orb role-orb-1" aria-hidden="true" />
-            <div className="role-bg-orb role-orb-2" aria-hidden="true" />
-
-            <div className="role-selection-container">
-                <div className="role-brand-header">
-                    <Droplet size={48} strokeWidth={2} className="role-logo-icon" />
-                    <h1 className="role-title">Bienvenue sur ONEE</h1>
-                    <p className="role-subtitle">Veuillez sélectionner votre type d'accès pour continuer</p>
+        <div className="login-container">
+            <div className="login-card">
+                <div className="login-header">
+                    <div className="onee-logo">
+                        <div className="logo-icon">💧</div>
+                        <div className="logo-text">
+                            <h1>ONEE</h1>
+                            <p>Branche Eau</p>
+                        </div>
+                    </div>
+                    <h2>Gestion des Consommables</h2>
+                    <p className="login-subtitle">Direction Régionale Béni Mellal Khénifra - Khouribga</p>
                 </div>
-
-                <div className="role-cards-wrapper">
-                    {/* User Card */}
-                    <Link to="/user/login" className="role-card">
-                        <div className="role-card-icon-wrapper">
-                            <UserCircle size={40} strokeWidth={1.5} />
-                        </div>
-                        <h2 className="role-card-title">Espace Agent</h2>
-                        <p className="role-card-description">
-                            Accédez au catalogue des consommables, effectuez vos demandes de fournitures et suivez l'état de vos tickets.
-                        </p>
-                    </Link>
-
-                    {/* Admin Card */}
-                    <Link to="/login" className="role-card">
-                        <div className="role-card-icon-wrapper">
-                            <ShieldCheck size={40} strokeWidth={1.5} />
-                        </div>
-                        <h2 className="role-card-title">Espace Administrateur</h2>
-                        <p className="role-card-description">
-                            Gérez les stocks, traitez les demandes des agents, et administrez les utilisateurs et le catalogue.
-                        </p>
-                    </Link>
+                
+                <div className="login-form">
+                    <h3 style={{ textAlign: 'center', marginBottom: '24px', color: '#1f2937' }}>
+                        Sélectionnez votre type d'accès
+                    </h3>
+                    
+                    <button 
+                        onClick={() => handleRoleSelect('admin')}
+                        className="login-button"
+                        style={{ marginBottom: '16px' }}
+                    >
+                        🛡️ Administrateur
+                    </button>
+                    
+                    <button 
+                        onClick={() => handleRoleSelect('employee')}
+                        className="login-button"
+                        style={{ backgroundColor: '#059669' }}
+                    >
+                        👤 Employé
+                    </button>
+                </div>
+                
+                <div className="login-footer">
+                    <p>© 2026 ONEE - Direction Régionale Béni Mellal Khénifra - Khouribga</p>
                 </div>
             </div>
         </div>
